@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 # SecureDock RBAC System
 
 **Secure Docker-Based Application Deployment System with Role-Based Access Control**
@@ -275,9 +273,3 @@ Request → Express Router
 | `JWT_EXPIRES_IN` | ✗        | `7d`                    | Token expiry duration     |
 | `PORT`           | ✗        | `5000`                  | Backend server port       |
 | `CLIENT_ORIGIN`  | ✗        | `http://localhost:5173` | Allowed CORS origin       |
-
----
-
-# _Built for university DevOps coursework — demonstrating Docker containerization, JWT RBAC, and GitHub Actions CI/CD._
-
-# SecureDock
