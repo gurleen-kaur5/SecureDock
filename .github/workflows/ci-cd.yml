@@ -1,5 +1,7 @@
 name: SecureDock CI/CD
-
+permissions:
+  contents: read
+  packages: write
 on:
   push:
     branches: [main, develop]
@@ -22,12 +24,14 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
           cache-dependency-path: backend/package-lock.json
 
       - name: Install dependencies
         run: npm ci
+      - name: Run backend tests
+        run: npm test --if-present
 
       - name: Security audit
         run: npm audit --audit-level=high
@@ -48,8 +52,8 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: "20"
+          cache: "npm"
           cache-dependency-path: frontend/package-lock.json
 
       - name: Install dependencies
@@ -85,7 +89,8 @@ jobs:
         with:
           context: ./backend
           push: false
-          tags: securedock-backend:${{ github.sha }}
+          pull: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/securedock-backend:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -94,7 +99,8 @@ jobs:
         with:
           context: ./frontend
           push: false
-          tags: securedock-frontend:${{ github.sha }}
+          pull: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/securedock-frontend:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -123,6 +129,7 @@ jobs:
         with:
           context: ./backend
           push: true
+          pull: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/securedock-backend:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/securedock-backend:${{ github.sha }}
@@ -134,6 +141,7 @@ jobs:
         with:
           context: ./frontend
           push: true
+          pull: true
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/securedock-frontend:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/securedock-frontend:${{ github.sha }}
