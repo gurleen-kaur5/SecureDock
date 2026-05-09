@@ -1,3 +1,5 @@
+<<<<<<< HEAD
+
 # SecureDock RBAC System
 
 **Secure Docker-Based Application Deployment System with Role-Based Access Control**
@@ -8,30 +10,33 @@ A production-style full-stack web application demonstrating secure authenticatio
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | React 18 + Vite, React Router v6, Axios |
-| Backend | Node.js, Express.js, JWT, bcrypt |
-| Database | MongoDB Atlas + Mongoose |
+| Layer    | Technology                                   |
+| -------- | -------------------------------------------- |
+| Frontend | React 18 + Vite, React Router v6, Axios      |
+| Backend  | Node.js, Express.js, JWT, bcrypt             |
+| Database | MongoDB Atlas + Mongoose                     |
 | Security | Helmet, CORS, Rate Limiting, RBAC Middleware |
-| DevOps | Docker, Docker Compose, GitHub Actions |
+| DevOps   | Docker, Docker Compose, GitHub Actions       |
 
 ---
 
 ## Features
 
 ### Authentication
+
 - User registration with role selection (user / admin)
 - JWT-based login with secure token storage
 - Protected routes (client + server side)
 - Token expiry handling with auto-redirect
 
 ### Authorization (RBAC)
+
 - **User role**: Create tasks, view own tasks, delete own tasks
 - **Admin role**: View all users, delete users, view all tasks, delete any task, system stats
 - Middleware-enforced role checks on every protected endpoint
 
 ### Security
+
 - Passwords hashed with bcrypt (12 salt rounds)
 - JWT tokens signed with env-configured secret
 - HTTP security headers via Helmet
@@ -101,6 +106,7 @@ SecureDock/
 ## Quick Start
 
 ### Prerequisites
+
 - Node.js 20+
 - Docker & Docker Compose
 - MongoDB Atlas account (free tier works)
@@ -125,6 +131,7 @@ CLIENT_ORIGIN=http://localhost:5173
 ```
 
 Generate a strong JWT secret:
+
 ```bash
 node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
 ```
@@ -135,10 +142,10 @@ node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
 docker-compose up --build
 ```
 
-| Service | URL |
-|---------|-----|
-| Frontend | http://localhost:5173 |
-| Backend API | http://localhost:5000/api |
+| Service      | URL                              |
+| ------------ | -------------------------------- |
+| Frontend     | http://localhost:5173            |
+| Backend API  | http://localhost:5000/api        |
 | Health Check | http://localhost:5000/api/health |
 
 ### 3. Run Locally (Development)
@@ -161,27 +168,30 @@ npm run dev               # runs on :5173
 ## API Reference
 
 ### Auth Endpoints
-| Method | Route | Auth | Description |
-|--------|-------|------|-------------|
-| POST | `/api/auth/register` | ✗ | Register new user |
-| POST | `/api/auth/login` | ✗ | Login, returns JWT |
-| GET | `/api/auth/me` | ✓ | Get current user |
+
+| Method | Route                | Auth | Description        |
+| ------ | -------------------- | ---- | ------------------ |
+| POST   | `/api/auth/register` | ✗    | Register new user  |
+| POST   | `/api/auth/login`    | ✗    | Login, returns JWT |
+| GET    | `/api/auth/me`       | ✓    | Get current user   |
 
 ### Task Endpoints (User)
-| Method | Route | Auth | Description |
-|--------|-------|------|-------------|
-| GET | `/api/tasks` | ✓ | Get own tasks |
-| POST | `/api/tasks` | ✓ | Create new task |
-| DELETE | `/api/tasks/:id` | ✓ | Delete own task |
+
+| Method | Route            | Auth | Description     |
+| ------ | ---------------- | ---- | --------------- |
+| GET    | `/api/tasks`     | ✓    | Get own tasks   |
+| POST   | `/api/tasks`     | ✓    | Create new task |
+| DELETE | `/api/tasks/:id` | ✓    | Delete own task |
 
 ### Admin Endpoints
-| Method | Route | Auth | Description |
-|--------|-------|------|-------------|
-| GET | `/api/admin/stats` | Admin | System statistics |
-| GET | `/api/admin/users` | Admin | List all users |
+
+| Method | Route                  | Auth  | Description               |
+| ------ | ---------------------- | ----- | ------------------------- |
+| GET    | `/api/admin/stats`     | Admin | System statistics         |
+| GET    | `/api/admin/users`     | Admin | List all users            |
 | DELETE | `/api/admin/users/:id` | Admin | Delete user + their tasks |
-| GET | `/api/admin/tasks` | Admin | List all tasks |
-| DELETE | `/api/admin/tasks/:id` | Admin | Delete any task |
+| GET    | `/api/admin/tasks`     | Admin | List all tasks            |
+| DELETE | `/api/admin/tasks/:id` | Admin | Delete any task           |
 
 ---
 
@@ -192,16 +202,16 @@ The pipeline runs on every push to `main` / `develop`:
 1. **Backend Check** — `npm audit` security scan
 2. **Frontend Build** — Vite production build + artifact upload
 3. **Docker Build** — Build both images (validates Dockerfiles)
-4. **Docker Push** *(main branch only)* — Push to Docker Hub
+4. **Docker Push** _(main branch only)_ — Push to Docker Hub
 
 ### GitHub Secrets Required
 
 In your GitHub repo → Settings → Secrets:
 
-| Secret | Value |
-|--------|-------|
+| Secret               | Value                    |
+| -------------------- | ------------------------ |
 | `DOCKERHUB_USERNAME` | Your Docker Hub username |
-| `DOCKERHUB_TOKEN` | Docker Hub access token |
+| `DOCKERHUB_TOKEN`    | Docker Hub access token  |
 
 ---
 
@@ -258,14 +268,16 @@ Request → Express Router
 
 ## Environment Variables
 
-| Variable | Required | Default | Description |
-|----------|----------|---------|-------------|
-| `MONGO_URI` | ✓ | — | MongoDB connection string |
-| `JWT_SECRET` | ✓ | — | Secret for signing JWTs |
-| `JWT_EXPIRES_IN` | ✗ | `7d` | Token expiry duration |
-| `PORT` | ✗ | `5000` | Backend server port |
-| `CLIENT_ORIGIN` | ✗ | `http://localhost:5173` | Allowed CORS origin |
+| Variable         | Required | Default                 | Description               |
+| ---------------- | -------- | ----------------------- | ------------------------- |
+| `MONGO_URI`      | ✓        | —                       | MongoDB connection string |
+| `JWT_SECRET`     | ✓        | —                       | Secret for signing JWTs   |
+| `JWT_EXPIRES_IN` | ✗        | `7d`                    | Token expiry duration     |
+| `PORT`           | ✗        | `5000`                  | Backend server port       |
+| `CLIENT_ORIGIN`  | ✗        | `http://localhost:5173` | Allowed CORS origin       |
 
 ---
 
-*Built for university DevOps coursework — demonstrating Docker containerization, JWT RBAC, and GitHub Actions CI/CD.*
+# _Built for university DevOps coursework — demonstrating Docker containerization, JWT RBAC, and GitHub Actions CI/CD._
+
+# SecureDock
