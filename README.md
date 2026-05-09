@@ -1,98 +1,176 @@
 # SecureDock RBAC System
 
-**Secure Docker-Based Application Deployment System with Role-Based Access Control**
+## Secure Docker-Based Application Deployment System with Role-Based Access Control
 
-A production-style full-stack web application demonstrating secure authentication, role-based authorization, containerized deployment with Docker, and automated CI/CD via GitHub Actions.
+A production-style full-stack DevOps project demonstrating:
 
----
-
-## Tech Stack
-
-| Layer    | Technology                                   |
-| -------- | -------------------------------------------- |
-| Frontend | React 18 + Vite, React Router v6, Axios      |
-| Backend  | Node.js, Express.js, JWT, bcrypt             |
-| Database | MongoDB Atlas + Mongoose                     |
-| Security | Helmet, CORS, Rate Limiting, RBAC Middleware |
-| DevOps   | Docker, Docker Compose, GitHub Actions       |
+- Secure Authentication & Authorization
+- Role-Based Access Control (RBAC)
+- Docker Containerization
+- CI/CD Automation using GitHub Actions
+- Secure API Architecture
+- Automated Docker Image Deployment
 
 ---
 
-## Features
+# 🚀 Features
 
-### Authentication
+## 🔐 Authentication & Authorization
 
-- User registration with role selection (user / admin)
-- JWT-based login with secure token storage
-- Protected routes (client + server side)
-- Token expiry handling with auto-redirect
+- JWT-based Authentication
+- Secure Login & Registration
+- Password Hashing using bcrypt
+- Protected Backend Routes
+- Client-side Route Guards
+- Token Expiry Handling
+- Persistent Login Sessions
+- Role-Based Access Control (RBAC)
 
-### Authorization (RBAC)
+### Roles Supported
 
-- **User role**: Create tasks, view own tasks, delete own tasks
-- **Admin role**: View all users, delete users, view all tasks, delete any task, system stats
-- Middleware-enforced role checks on every protected endpoint
+#### 👤 User
 
-### Security
+- Register/Login
+- Create Tasks
+- Update Task Progress
+- Delete Own Tasks
+- View Own Tasks
 
-- Passwords hashed with bcrypt (12 salt rounds)
-- JWT tokens signed with env-configured secret
-- HTTP security headers via Helmet
-- Rate limiting (100 req / 15 min per IP)
-- CORS restricted to configured origin
-- Non-root Docker user execution
-- No secrets in source code — all via `.env`
+#### 👑 Admin
+
+- View All Users
+- Delete Any User
+- View All Tasks
+- Delete Any Task
+- View System Statistics
 
 ---
 
-## Project Structure
+# 🛡️ Security Features
 
-```
+- JWT Authentication
+- bcrypt Password Hashing
+- Helmet Security Headers
+- Express Rate Limiting
+- Secure Environment Variables
+- Docker Non-Root User Execution
+- CORS Protection
+- Protected API Routes
+- Role Verification Middleware
+- Secure Token-Based Authorization
+
+---
+
+# 🐳 Docker & DevOps Features
+
+- Dockerized Frontend
+- Dockerized Backend
+- Docker Compose Orchestration
+- Multi-Container Setup
+- Health Check API
+- CI/CD Pipeline using GitHub Actions
+- Automated Docker Image Build
+- Automated Docker Hub Push
+- Build Validation Pipeline
+- Production-Style Deployment Workflow
+
+---
+
+# ⚡ GitHub Actions CI/CD Pipeline
+
+The CI/CD pipeline automatically runs on every push to:
+
+- `main`
+- `develop`
+
+## Pipeline Stages
+
+### ✅ Backend Check
+
+- Install Dependencies
+- Security Audit using `npm audit`
+
+### ✅ Frontend Build
+
+- Install Dependencies
+- Production Build using Vite
+- Artifact Upload
+
+### ✅ Docker Build
+
+- Build Backend Docker Image
+- Build Frontend Docker Image
+
+### ✅ Docker Push
+
+- Push Images to Docker Hub
+- Triggered only on `main` branch
+
+---
+
+# 🧰 Tech Stack
+
+| Layer            | Technology                             |
+| ---------------- | -------------------------------------- |
+| Frontend         | React 18, Vite, Axios                  |
+| Backend          | Node.js, Express.js                    |
+| Database         | MongoDB Atlas                          |
+| Authentication   | JWT                                    |
+| Security         | bcrypt, Helmet, Rate Limiting          |
+| DevOps           | Docker, Docker Compose, GitHub Actions |
+| Deployment       | Docker Hub                             |
+| State Management | React Context API                      |
+
+---
+
+# 📁 Project Structure
+
+```text
 SecureDock/
+│
+├── .github/
+│   └── workflows/
+│       └── ci-cd.yml
+│
 ├── backend/
 │   ├── config/
-│   │   └── db.js                  # MongoDB connection
+│   │   └── db.js
+│   │
 │   ├── controllers/
-│   │   ├── auth.controller.js     # register, login, getMe
-│   │   ├── task.controller.js     # CRUD for own tasks
-│   │   └── admin.controller.js    # admin-only operations
+│   │   ├── admin.controller.js
+│   │   ├── auth.controller.js
+│   │   └── task.controller.js
+│   │
 │   ├── middleware/
-│   │   └── auth.middleware.js     # protect + adminOnly
+│   │   └── auth.middleware.js
+│   │
 │   ├── models/
-│   │   ├── user.model.js          # User schema
-│   │   └── task.model.js          # Task schema
+│   │   ├── task.model.js
+│   │   └── user.model.js
+│   │
 │   ├── routes/
+│   │   ├── admin.routes.js
 │   │   ├── auth.routes.js
-│   │   ├── user.routes.js
 │   │   ├── task.routes.js
-│   │   └── admin.routes.js
-│   ├── server.js                  # Express app entry
+│   │   └── user.routes.js
+│   │
 │   ├── Dockerfile
-│   └── package.json
+│   ├── package.json
+│   └── server.js
 │
 ├── frontend/
 │   ├── src/
 │   │   ├── components/
-│   │   │   └── Sidebar.jsx
 │   │   ├── context/
-│   │   │   └── AuthContext.jsx    # Global auth state
 │   │   ├── pages/
-│   │   │   ├── Login.jsx
-│   │   │   ├── Register.jsx
-│   │   │   ├── UserDashboard.jsx
-│   │   │   └── AdminDashboard.jsx
 │   │   ├── services/
-│   │   │   └── api.js             # Axios instance + interceptors
-│   │   ├── App.jsx                # Routing + route guards
-│   │   ├── index.css              # Design system
+│   │   ├── App.jsx
 │   │   └── main.jsx
+│   │
 │   ├── Dockerfile
-│   ├── vite.config.js
-│   └── package.json
+│   ├── package.json
+│   └── vite.config.js
 │
-├── .github/
-│   └── workflows/
-│       └── ci-cd.yml              # GitHub Actions pipeline
 ├── docker-compose.yml
 ├── .env.example
 ├── .gitignore
@@ -101,44 +179,77 @@ SecureDock/
 
 ---
 
-## Quick Start
+# ⚙️ Environment Variables
 
-### Prerequisites
-
-- Node.js 20+
-- Docker & Docker Compose
-- MongoDB Atlas account (free tier works)
-
-### 1. Clone & Configure
-
-```bash
-git clone https://github.com/yourname/securedock.git
-cd SecureDock
-
-# Copy environment template
-cp .env.example .env
-```
-
-Edit `.env` and fill in your values:
+Create a `.env` file in the root directory.
 
 ```env
-MONGO_URI=mongodb+srv://<user>:<pass>@cluster0.xxxxx.mongodb.net/securedock
-JWT_SECRET=your_64_char_random_secret_here
+MONGO_URI=your_mongodb_connection_string
+
+JWT_SECRET=your_super_secret_key
+
 JWT_EXPIRES_IN=7d
+
+PORT=5000
+
 CLIENT_ORIGIN=http://localhost:5173
 ```
 
-Generate a strong JWT secret:
+---
+
+# 🔧 Installation & Setup
+
+## 1️⃣ Clone Repository
 
 ```bash
-node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+git clone https://github.com/gurleen-kaur5/SecureDock.git
+
+cd SecureDock
 ```
 
-### 2. Run with Docker (Recommended)
+---
+
+# 🐳 Run Using Docker (Recommended)
+
+## Build & Start Containers
 
 ```bash
 docker-compose up --build
 ```
+
+## Stop Containers
+
+```bash
+docker-compose down
+```
+
+---
+
+# 💻 Run Locally Without Docker
+
+## Backend
+
+```bash
+cd backend
+
+npm install
+
+npm run dev
+```
+
+## Frontend
+
+```bash
+cd frontend
+
+npm install
+
+npm run dev
+```
+
+---
+
+# 🌐 Application URLs
 
 | Service      | URL                              |
 | ------------ | -------------------------------- |
@@ -146,135 +257,222 @@ docker-compose up --build
 | Backend API  | http://localhost:5000/api        |
 | Health Check | http://localhost:5000/api/health |
 
-### 3. Run Locally (Development)
+---
+
+# 📌 API Endpoints
+
+# 🔐 Authentication Routes
+
+| Method | Endpoint             | Description   |
+| ------ | -------------------- | ------------- |
+| POST   | `/api/auth/register` | Register User |
+| POST   | `/api/auth/login`    | Login User    |
+| GET    | `/api/auth/me`       | Current User  |
+
+---
+
+# 📝 Task Routes
+
+| Method | Endpoint         | Description          |
+| ------ | ---------------- | -------------------- |
+| GET    | `/api/tasks`     | Get User Tasks       |
+| POST   | `/api/tasks`     | Create Task          |
+| PUT    | `/api/tasks/:id` | Update Task Progress |
+| DELETE | `/api/tasks/:id` | Delete Task          |
+
+---
+
+# 👑 Admin Routes
+
+| Method | Endpoint               | Description       |
+| ------ | ---------------------- | ----------------- |
+| GET    | `/api/admin/stats`     | System Statistics |
+| GET    | `/api/admin/users`     | Get All Users     |
+| DELETE | `/api/admin/users/:id` | Delete User       |
+| GET    | `/api/admin/tasks`     | Get All Tasks     |
+| DELETE | `/api/admin/tasks/:id` | Delete Any Task   |
+
+---
+
+# 🐳 Docker Commands Used
+
+## Build Docker Images
 
 ```bash
-# Backend
-cd backend
-cp ../.env.example .env   # edit with your values
-npm install
-npm run dev               # runs on :5000
+docker build -t securedock-backend ./backend
 
-# Frontend (new terminal)
-cd frontend
-npm install
-npm run dev               # runs on :5173
+docker build -t securedock-frontend ./frontend
+```
+
+## Run Containers
+
+```bash
+docker run -p 5000:5000 securedock-backend
+
+docker run -p 5173:5173 securedock-frontend
+```
+
+## View Running Containers
+
+```bash
+docker ps
+```
+
+## Stop Containers
+
+```bash
+docker stop <container_id>
+```
+
+## Remove Containers
+
+```bash
+docker rm <container_id>
+```
+
+## Remove Images
+
+```bash
+docker rmi <image_id>
 ```
 
 ---
 
-## API Reference
+# 🔄 GitHub Actions Workflow
 
-### Auth Endpoints
+Workflow File Location:
 
-| Method | Route                | Auth | Description        |
-| ------ | -------------------- | ---- | ------------------ |
-| POST   | `/api/auth/register` | ✗    | Register new user  |
-| POST   | `/api/auth/login`    | ✗    | Login, returns JWT |
-| GET    | `/api/auth/me`       | ✓    | Get current user   |
+```text
+.github/workflows/ci-cd.yml
+```
 
-### Task Endpoints (User)
+## GitHub Secrets Required
 
-| Method | Route            | Auth | Description     |
-| ------ | ---------------- | ---- | --------------- |
-| GET    | `/api/tasks`     | ✓    | Get own tasks   |
-| POST   | `/api/tasks`     | ✓    | Create new task |
-| DELETE | `/api/tasks/:id` | ✓    | Delete own task |
+Go to:
 
-### Admin Endpoints
+```text
+Repository → Settings → Secrets and Variables → Actions
+```
 
-| Method | Route                  | Auth  | Description               |
-| ------ | ---------------------- | ----- | ------------------------- |
-| GET    | `/api/admin/stats`     | Admin | System statistics         |
-| GET    | `/api/admin/users`     | Admin | List all users            |
-| DELETE | `/api/admin/users/:id` | Admin | Delete user + their tasks |
-| GET    | `/api/admin/tasks`     | Admin | List all tasks            |
-| DELETE | `/api/admin/tasks/:id` | Admin | Delete any task           |
+Add:
+
+| Secret Name        | Value                   |
+| ------------------ | ----------------------- |
+| DOCKERHUB_USERNAME | Your DockerHub Username |
+| DOCKERHUB_TOKEN    | DockerHub Access Token  |
 
 ---
 
-## GitHub Actions CI/CD
+# 📦 Docker Hub Integration
 
-The pipeline runs on every push to `main` / `develop`:
+Docker images are automatically pushed to Docker Hub after successful builds.
 
-1. **Backend Check** — `npm audit` security scan
-2. **Frontend Build** — Vite production build + artifact upload
-3. **Docker Build** — Build both images (validates Dockerfiles)
-4. **Docker Push** _(main branch only)_ — Push to Docker Hub
+## Images Generated
 
-### GitHub Secrets Required
+```text
+gurleennkaur5/securedock-backend
 
-In your GitHub repo → Settings → Secrets:
-
-| Secret               | Value                    |
-| -------------------- | ------------------------ |
-| `DOCKERHUB_USERNAME` | Your Docker Hub username |
-| `DOCKERHUB_TOKEN`    | Docker Hub access token  |
-
----
-
-## RBAC Architecture
-
-```
-Request → Express Router
-              ↓
-         protect()          ← validates JWT, attaches req.user
-              ↓
-         adminOnly()        ← checks req.user.role === 'admin'
-              ↓
-         Controller         ← business logic
-              ↓
-         MongoDB            ← data layer
-```
-
-- Roles: `user` (default) | `admin`
-- Roles stored in MongoDB, embedded in JWT payload
-- Every sensitive route is double-protected: JWT auth + role check
-
----
-
-## Docker Architecture
-
-```
-┌─────────────────────────────────┐
-│         docker-compose          │
-│                                 │
-│  ┌─────────────┐  ┌──────────┐ │
-│  │  frontend   │  │ backend  │ │
-│  │  :5173      │  │  :5000   │ │
-│  │  (serve)    │  │  (node)  │ │
-│  └─────────────┘  └────┬─────┘ │
-│                         │       │
-└─────────────────────────┼───────┘
-                          │
-                   MongoDB Atlas
-                   (external cloud)
+gurleennkaur5/securedock-frontend
 ```
 
 ---
 
-## Demo Walkthrough (Viva)
+# 🔍 Health Check Endpoint
 
-1. **Register** as a `user` → redirected to User Dashboard
-2. **Create tasks** with different statuses (pending, in-progress, completed)
-3. **Logout**, then **register** as an `admin`
-4. **Admin Dashboard** → Overview (stats), Users (list + delete), Tasks (all tasks + delete)
-5. Show **401** by calling `/api/admin/stats` without a token in browser
-6. Show **403** by calling admin route with a user token
+```http
+GET /api/health
+```
+
+Response:
+
+```json
+{
+  "status": "OK",
+  "message": "SecureDock API running"
+}
+```
 
 ---
 
-## Environment Variables
+# 🧠 RBAC Flow
 
-| Variable         | Required | Default                 | Description               |
-| ---------------- | -------- | ----------------------- | ------------------------- |
-| `MONGO_URI`      | ✓        | —                       | MongoDB connection string |
-| `JWT_SECRET`     | ✓        | —                       | Secret for signing JWTs   |
-| `JWT_EXPIRES_IN` | ✗        | `7d`                    | Token expiry duration     |
-| `PORT`           | ✗        | `5000`                  | Backend server port       |
-| `CLIENT_ORIGIN`  | ✗        | `http://localhost:5173` | Allowed CORS origin       |
-<<<<<<< HEAD
-=======
+```text
+Request
+   ↓
+JWT Verification
+   ↓
+Role Validation
+   ↓
+Protected Controller
+   ↓
+MongoDB
+```
 
+---
 
->>>>>>> a262a803fb1177d17bba65b80235cf17cc4e2016
+# 📸 Demo Flow
+
+## User Flow
+
+- Register as User
+- Login
+- Create Tasks
+- Update Task Progress
+- Delete Tasks
+
+## Admin Flow
+
+- Register/Login as Admin
+- View Users
+- View All Tasks
+- Delete Users
+- Delete Tasks
+- Monitor System Stats
+
+---
+
+# 📈 DevOps Concepts Implemented
+
+- CI/CD Pipeline
+- Containerization
+- Docker Networking
+- Image Tagging
+- Automated Deployment
+- Build Automation
+- Environment Variable Management
+- Secure Secret Management
+- Multi-Container Architecture
+
+---
+
+# 🎯 Future Enhancements
+
+- Kubernetes Deployment
+- Nginx Reverse Proxy
+- HTTPS with SSL
+- Refresh Tokens
+- Redis Caching
+- Role Permission Matrix
+- Monitoring using Prometheus & Grafana
+- Jenkins Integration
+- AWS/GCP Deployment
+
+---
+
+# 👩‍💻 Author
+
+## Gurleen Kaur
+
+3rd Year CSE Undergraduate  
+DevOps | Full Stack | Security Enthusiast
+
+GitHub:  
+https://github.com/gurleen-kaur5
+
+---
+
+# ⭐ If You Like This Project
+
+Give this repository a ⭐ on GitHub.
+
+---
