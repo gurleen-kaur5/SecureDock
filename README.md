@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 # SecureDock RBAC System
 
 **Secure Docker-Based Application Deployment System with Role-Based Access Control**
