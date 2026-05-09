@@ -273,3 +273,8 @@ Request → Express Router
 | `JWT_EXPIRES_IN` | ✗        | `7d`                    | Token expiry duration     |
 | `PORT`           | ✗        | `5000`                  | Backend server port       |
 | `CLIENT_ORIGIN`  | ✗        | `http://localhost:5173` | Allowed CORS origin       |
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> a262a803fb1177d17bba65b80235cf17cc4e2016
