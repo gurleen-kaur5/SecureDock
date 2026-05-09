@@ -274,8 +274,4 @@ Request → Express Router
 | `PORT`           | ✗        | `5000`                  | Backend server port       |
 | `CLIENT_ORIGIN`  | ✗        | `http://localhost:5173` | Allowed CORS origin       |
 
----
 
-# _Built for university DevOps coursework — demonstrating Docker containerization, JWT RBAC, and GitHub Actions CI/CD._
-
-# SecureDock
