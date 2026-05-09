@@ -17,13 +17,10 @@ const deleteUser = async (req, res) => {
     if (req.params.id === req.user._id.toString()) {
       return res.status(400).json({ error: 'You cannot delete your own account.' });
     }
-
     const user = await User.findByIdAndDelete(req.params.id);
     if (!user) return res.status(404).json({ error: 'User not found.' });
 
-    // Delete all tasks owned by this user
     await Task.deleteMany({ owner: req.params.id });
-
     res.json({ message: 'User and their tasks deleted successfully.' });
   } catch (error) {
     res.status(500).json({ error: 'Failed to delete user.' });
@@ -39,6 +36,28 @@ const getAllTasks = async (req, res) => {
     res.json({ tasks });
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch tasks.' });
+  }
+};
+
+// @route  PATCH /api/admin/tasks/:id  — admin edits any task
+const updateAnyTask = async (req, res) => {
+  try {
+    const { title, description, status } = req.body;
+    const task = await Task.findById(req.params.id);
+    if (!task) return res.status(404).json({ error: 'Task not found.' });
+
+    if (title !== undefined) task.title = title;
+    if (description !== undefined) task.description = description;
+    if (status !== undefined) task.status = status;
+
+    await task.save();
+    res.json({ task });
+  } catch (error) {
+    if (error.name === 'ValidationError') {
+      const messages = Object.values(error.errors).map((e) => e.message);
+      return res.status(400).json({ error: messages.join(', ') });
+    }
+    res.status(500).json({ error: 'Failed to update task.' });
   }
 };
 
@@ -67,4 +86,4 @@ const getStats = async (req, res) => {
   }
 };
 
-module.exports = { getAllUsers, deleteUser, getAllTasks, deleteAnyTask, getStats };
+module.exports = { getAllUsers, deleteUser, getAllTasks, updateAnyTask, deleteAnyTask, getStats };
