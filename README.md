@@ -6,10 +6,11 @@ A production-style full-stack DevOps project demonstrating:
 
 - Secure Authentication & Authorization
 - Role-Based Access Control (RBAC)
-- Docker Containerization
-- CI/CD Automation using GitHub Actions
-- Secure API Architecture
-- Automated Docker Image Build & Registry Push
+- Docker-Based Multi-Container Architecture
+- CI Pipeline Automation using GitHub Actions
+- Secure REST API Architecture
+- Automated Docker Image Build & Docker Hub Push
+- Container Orchestration using Docker Compose
 
 ---
 
