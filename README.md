@@ -9,7 +9,7 @@ A production-style full-stack DevOps project demonstrating:
 - Docker Containerization
 - CI/CD Automation using GitHub Actions
 - Secure API Architecture
-- Automated Docker Image Deployment
+- Automated Docker Image Build & Registry Push
 
 ---
 
