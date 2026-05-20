@@ -69,7 +69,7 @@ A production-style full-stack DevOps project demonstrating:
 - Docker Compose Orchestration
 - Multi-Container Setup
 - Health Check API
-- CI/CD Pipeline using GitHub Actions
+- CI Pipeline using GitHub Actions
 - Automated Docker Image Build
 - Automated Docker Hub Push
 - Build Validation Pipeline
@@ -77,9 +77,9 @@ A production-style full-stack DevOps project demonstrating:
 
 ---
 
-# ⚡ GitHub Actions CI/CD Pipeline
+# ⚡ GitHub Actions CI Pipeline
 
-The CI/CD pipeline automatically runs on every push to:
+The CI pipeline automatically runs on every push to:
 
 - `main`
 - `develop`
